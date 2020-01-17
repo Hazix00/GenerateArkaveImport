@@ -9,7 +9,7 @@ namespace GenerateArkaveImport
     class DB
     {
         string reqDoss = "select * from Dossier";
-        string 
+        
                    
     }
 }
