@@ -36,7 +36,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(12, 30);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(170, 20);
+            this.textBox1.Size = new System.Drawing.Size(232, 20);
             this.textBox1.TabIndex = 0;
             // 
             // RadForm1
