@@ -42,9 +42,25 @@ namespace GenerateArkaveImport
 
                         return;
                     }
+                    CBtranche.DataSource = dt;
+                    CBtranche.DisplayMember = "id_tranche";
+                    CBtranche.ValueMember = "id_tranche";
+                    if (CBtranche.Items.Count > 0)
+                    {
+                        BtnGenerer.Enabled = true;
+                        
 
-                  
-                
+                    }
+                    else
+                    {
+                        MessageBox.Show("Pas de tranches!!!");
+                    }
+
+
+
+
+
+
                 }
                 catch (Exception ex)
                 {
@@ -55,6 +71,12 @@ namespace GenerateArkaveImport
 
         }
 
-   
+        private void BtnGenerer_Click(object sender, EventArgs e)
+        {
+          
+            
+
+
+        }
     }
 }
