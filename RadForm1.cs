@@ -113,6 +113,32 @@ namespace GenerateArkaveImport
                                 Directory.CreateDirectory(dossPath);
                             }
                             DB dB = new DB(conString);
+                            // Pieces sans hors sous dossiers
+                            DataTable piecesSD0 = dB.PieceSD0(id_dossier);
+                            foreach (DataRow piece in piecesSD0.Rows)
+                            {
+                                string num_pg = piece["Numero_page"].ToString();
+                                string nomPiece = piece["Nature_Acte"].ToString();
+                                string chemin = piece["CHEMIN_PHYSIQUE"].ToString();
+
+                                string sdPath = Path.Combine(dossPath, "sd0");
+                                if (!Directory.Exists(sdPath))
+                                {
+                                    Directory.CreateDirectory(sdPath);
+                                }
+
+                                string piecePath = Path.Combine(sdPath, nomPiece);
+                                if (!Directory.Exists(piecePath))
+                                {
+                                    Directory.CreateDirectory(piecePath);
+                                }
+
+                                string imgNewPath = Path.Combine(piecePath, $"p{num_pg}{new FileInfo(chemin).Extension}");
+                                if (!File.Exists(imgNewPath))
+                                {
+                                    File.Copy(chemin, imgNewPath);
+                                }
+                            }
                             // Sous Dossiers
                             DataTable souDoss = dB.SousDossier(id_dossier);
                             foreach (DataRow sd in souDoss.Rows)
@@ -126,7 +152,9 @@ namespace GenerateArkaveImport
                                 {
                                     Directory.CreateDirectory(sdPath); 
                                 }
-                                // Pieces
+
+
+                                // Pieces dans sous dossier
                                 DataTable pieces = dB.Piece(id_sd);
                                 foreach (DataRow piece in pieces.Rows)
                                 {
