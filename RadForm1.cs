@@ -36,7 +36,7 @@ namespace GenerateArkaveImport
                     SqlDataAdapter da = new SqlDataAdapter(req, con);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
-                    if (dt.Rows.Count == 0)
+                    if (dt.Rows.Count == 0)  
                     {
                         MessageBox.Show("aucun tranche");
 
