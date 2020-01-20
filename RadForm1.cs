@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Telerik.WinControls;
 using Telerik.WinControls.UI;
 using System.Data.SqlClient;
+using System.IO;
+
 namespace GenerateArkaveImport
 {
     public partial class RadForm1 : Telerik.WinControls.UI.RadForm
@@ -71,37 +73,49 @@ namespace GenerateArkaveImport
         private void bntGenerer_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.ShowDialog();
-            string path = folder.SelectedPath;
-            
-            //string connectString = $"Server = {server}; Database = CADASTRE_CONTROLE_TAZA; User ID = {Login}; Password = {password}";
-
-            using (SqlConnection con = new SqlConnection(conString))
+            if (folder.ShowDialog() == DialogResult.OK)
             {
-                try
+                string path = folder.SelectedPath;
+
+                //string connectString = $"Server = {server}; Database = CADASTRE_CONTROLE_TAZA; User ID = {Login}; Password = {password}";
+
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-
-                    con.Open();
-
-                    string reqD = "select * from dossier ";
-
-                    SqlDataAdapter da = new SqlDataAdapter(reqD, con);
-                    DataTable DT = new DataTable();
-                    da.Fill(DT);
-
-                    foreach(DataRow row in DT.Rows)
+                    try
                     {
-                        
+                        con.Open();
 
+                        string reqD = "select top 10 * from dossier ";
+                        SqlDataAdapter da = new SqlDataAdapter(reqD, con);
+                        DataTable DT = new DataTable();
+                        da.Fill(DT);
 
+                        foreach (DataRow row in DT.Rows)
+                        {
+                            string nomDoss = "";
+                            string NatureOrigine = row["nature_origine"].ToString();
+                            if (NatureOrigine == "R")
+                            {
+                                string NumeroOrigine = row["Numero_origine"].ToString();
+                                string indiceOrigine = row["indice_origine"].ToString();
+                                nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
+                            }
+                            else if (NatureOrigine == "T")
+                            {
+                                string NumeroOrigine = row["Numero_Titre"].ToString();
+                                string indiceOrigine = row["indice_Titre"].ToString();
+                                nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
+                            }
+                            Directory.CreateDirectory(Path.Combine(path, nomDoss));
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
 
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
             }
         }
     }
