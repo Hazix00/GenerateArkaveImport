@@ -37,7 +37,7 @@
             this.btnConnexion = new System.Windows.Forms.Button();
             this.bntGenerer = new System.Windows.Forms.Button();
             this.btnAnnuler = new System.Windows.Forms.Button();
-            this.cbTranche = new System.Windows.Forms.ComboBox();
+            this.comboxTranche = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
@@ -104,6 +104,7 @@
             this.btnConnexion.TabIndex = 6;
             this.btnConnexion.Text = "Connexion";
             this.btnConnexion.UseVisualStyleBackColor = true;
+            this.btnConnexion.Click += new System.EventHandler(this.btnConnexion_Click);
             // 
             // bntGenerer
             // 
@@ -116,6 +117,7 @@
             this.bntGenerer.TabIndex = 7;
             this.bntGenerer.Text = "Generer";
             this.bntGenerer.UseVisualStyleBackColor = true;
+            this.bntGenerer.Click += new System.EventHandler(this.bntGenerer_Click);
             // 
             // btnAnnuler
             // 
@@ -128,13 +130,14 @@
             this.btnAnnuler.Text = "Annuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
             // 
-            // cbTranche
+            // comboxTranche
             // 
-            this.cbTranche.FormattingEnabled = true;
-            this.cbTranche.Location = new System.Drawing.Point(339, 186);
-            this.cbTranche.Name = "cbTranche";
-            this.cbTranche.Size = new System.Drawing.Size(121, 21);
-            this.cbTranche.TabIndex = 9;
+            this.comboxTranche.FormattingEnabled = true;
+            this.comboxTranche.Location = new System.Drawing.Point(339, 186);
+            this.comboxTranche.Name = "comboxTranche";
+            this.comboxTranche.Size = new System.Drawing.Size(121, 21);
+            this.comboxTranche.TabIndex = 9;
+            this.comboxTranche.SelectedIndexChanged += new System.EventHandler(this.comboxTranche_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -152,7 +155,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 266);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.cbTranche);
+            this.Controls.Add(this.comboxTranche);
             this.Controls.Add(this.btnAnnuler);
             this.Controls.Add(this.bntGenerer);
             this.Controls.Add(this.btnConnexion);
@@ -185,7 +188,7 @@
         private System.Windows.Forms.Button btnConnexion;
         private System.Windows.Forms.Button bntGenerer;
         private System.Windows.Forms.Button btnAnnuler;
-        private System.Windows.Forms.ComboBox cbTranche;
+        private System.Windows.Forms.ComboBox comboxTranche;
         private System.Windows.Forms.Label label4;
     }
 }
