@@ -113,6 +113,7 @@
             this.BtnGenerer.TabIndex = 7;
             this.BtnGenerer.Text = "Generer";
             this.BtnGenerer.UseVisualStyleBackColor = true;
+            this.BtnGenerer.Click += new System.EventHandler(this.BtnGenerer_Click);
             // 
             // BtnAnnuler
             // 
