@@ -170,7 +170,8 @@
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
-            this.Text = "RadForm1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "ArkaveImport";
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
