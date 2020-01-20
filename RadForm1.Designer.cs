@@ -127,6 +127,7 @@
             // 
             // btnAnnuler
             // 
+            this.btnAnnuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnAnnuler.Font = new System.Drawing.Font("Segoe UI Historic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAnnuler.ForeColor = System.Drawing.Color.Black;
             this.btnAnnuler.Location = new System.Drawing.Point(30, 303);
@@ -135,6 +136,7 @@
             this.btnAnnuler.TabIndex = 8;
             this.btnAnnuler.Text = "Annuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
+            this.btnAnnuler.Click += new System.EventHandler(this.btnAnnuler_Click);
             // 
             // label4
             // 
@@ -178,6 +180,7 @@
             this.radProgressBar1.Name = "radProgressBar1";
             this.radProgressBar1.Size = new System.Drawing.Size(466, 32);
             this.radProgressBar1.TabIndex = 14;
+            this.radProgressBar1.Text = "0%";
             // 
             // radLabel1
             // 
@@ -189,8 +192,10 @@
             // 
             // RadForm1
             // 
+            this.AcceptButton = this.bntGenerer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnAnnuler;
             this.ClientSize = new System.Drawing.Size(534, 359);
             this.Controls.Add(this.radLabel1);
             this.Controls.Add(this.radProgressBar1);

@@ -187,5 +187,10 @@ namespace GenerateArkaveImport
                 }
             }
         }
+
+        private void btnAnnuler_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
