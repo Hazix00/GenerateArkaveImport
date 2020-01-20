@@ -107,6 +107,7 @@ namespace GenerateArkaveImport
                                 nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
                             }
                             Directory.CreateDirectory(Path.Combine(path, nomDoss));
+
                         }
 
                     }
