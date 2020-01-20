@@ -29,5 +29,20 @@ namespace GenerateArkaveImport
             }
         }
 
+        public DataTable Piece(string id_sd)
+        {
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string reqD = $"select * from piece where id_sd ='{id_sd}'";
+                SqlDataAdapter da = new SqlDataAdapter(reqD, con);
+                DataTable DT = new DataTable();
+                da.Fill(DT);
+                foreach
+                
+                return DT;
+            }
+        }
+
     }
 }

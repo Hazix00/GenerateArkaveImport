@@ -72,6 +72,7 @@ namespace GenerateArkaveImport
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
             folder.ShowDialog();
+            string path = folder.SelectedPath;
             
             //string connectString = $"Server = {server}; Database = CADASTRE_CONTROLE_TAZA; User ID = {Login}; Password = {password}";
 
@@ -87,6 +88,13 @@ namespace GenerateArkaveImport
                     SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                     DataTable DT = new DataTable();
                     da.Fill(DT);
+
+                    foreach(DataRow row in DT.Rows)
+                    {
+                        
+
+
+                    }
 
                 }
                 catch (Exception ex)
