@@ -28,40 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tbServeur = new System.Windows.Forms.TextBox();
+            this.tbLogin = new System.Windows.Forms.TextBox();
+            this.tbPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnConnexion = new System.Windows.Forms.Button();
+            this.bntGenerer = new System.Windows.Forms.Button();
+            this.btnAnnuler = new System.Windows.Forms.Button();
+            this.cbTranche = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbServeur
             // 
-            this.textBox1.Location = new System.Drawing.Point(275, 25);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(129, 20);
-            this.textBox1.TabIndex = 0;
+            this.tbServeur.Location = new System.Drawing.Point(275, 25);
+            this.tbServeur.Name = "tbServeur";
+            this.tbServeur.Size = new System.Drawing.Size(129, 20);
+            this.tbServeur.TabIndex = 0;
             // 
-            // textBox2
+            // tbLogin
             // 
-            this.textBox2.Location = new System.Drawing.Point(275, 65);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(129, 20);
-            this.textBox2.TabIndex = 1;
+            this.tbLogin.Location = new System.Drawing.Point(275, 65);
+            this.tbLogin.Name = "tbLogin";
+            this.tbLogin.Size = new System.Drawing.Size(129, 20);
+            this.tbLogin.TabIndex = 1;
             // 
-            // textBox3
+            // tbPassword
             // 
-            this.textBox3.Location = new System.Drawing.Point(275, 104);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(129, 20);
-            this.textBox3.TabIndex = 2;
+            this.tbPassword.Location = new System.Drawing.Point(275, 104);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.PasswordChar = '*';
+            this.tbPassword.Size = new System.Drawing.Size(129, 20);
+            this.tbPassword.TabIndex = 2;
             // 
             // label1
             // 
@@ -93,40 +94,47 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Password       :";
             // 
-            // button1
+            // btnConnexion
             // 
-            this.button1.Location = new System.Drawing.Point(41, 186);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Connexion";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnConnexion.Font = new System.Drawing.Font("Segoe UI Historic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConnexion.ForeColor = System.Drawing.Color.Black;
+            this.btnConnexion.Location = new System.Drawing.Point(41, 186);
+            this.btnConnexion.Name = "btnConnexion";
+            this.btnConnexion.Size = new System.Drawing.Size(121, 23);
+            this.btnConnexion.TabIndex = 6;
+            this.btnConnexion.Text = "Connexion";
+            this.btnConnexion.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // bntGenerer
             // 
-            this.button2.Location = new System.Drawing.Point(339, 231);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(121, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Generer";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bntGenerer.Enabled = false;
+            this.bntGenerer.Font = new System.Drawing.Font("Segoe UI Historic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntGenerer.ForeColor = System.Drawing.Color.Black;
+            this.bntGenerer.Location = new System.Drawing.Point(339, 231);
+            this.bntGenerer.Name = "bntGenerer";
+            this.bntGenerer.Size = new System.Drawing.Size(121, 23);
+            this.bntGenerer.TabIndex = 7;
+            this.bntGenerer.Text = "Generer";
+            this.bntGenerer.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnAnnuler
             // 
-            this.button3.Location = new System.Drawing.Point(41, 231);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(121, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Annuler";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnAnnuler.Font = new System.Drawing.Font("Segoe UI Historic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAnnuler.ForeColor = System.Drawing.Color.Black;
+            this.btnAnnuler.Location = new System.Drawing.Point(41, 231);
+            this.btnAnnuler.Name = "btnAnnuler";
+            this.btnAnnuler.Size = new System.Drawing.Size(121, 23);
+            this.btnAnnuler.TabIndex = 8;
+            this.btnAnnuler.Text = "Annuler";
+            this.btnAnnuler.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cbTranche
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(339, 186);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 9;
+            this.cbTranche.FormattingEnabled = true;
+            this.cbTranche.Location = new System.Drawing.Point(339, 186);
+            this.cbTranche.Name = "cbTranche";
+            this.cbTranche.Size = new System.Drawing.Size(121, 21);
+            this.cbTranche.TabIndex = 9;
             // 
             // label4
             // 
@@ -144,16 +152,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 266);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cbTranche);
+            this.Controls.Add(this.btnAnnuler);
+            this.Controls.Add(this.bntGenerer);
+            this.Controls.Add(this.btnConnexion);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbPassword);
+            this.Controls.Add(this.tbLogin);
+            this.Controls.Add(this.tbServeur);
             this.Name = "RadForm1";
             // 
             // 
@@ -168,16 +176,16 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbServeur;
+        private System.Windows.Forms.TextBox tbLogin;
+        private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnConnexion;
+        private System.Windows.Forms.Button bntGenerer;
+        private System.Windows.Forms.Button btnAnnuler;
+        private System.Windows.Forms.ComboBox cbTranche;
         private System.Windows.Forms.Label label4;
     }
 }
