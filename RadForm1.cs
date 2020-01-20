@@ -84,8 +84,8 @@ namespace GenerateArkaveImport
                     try
                     {
                         con.Open();
-
-                        string reqD = "select top 10 * from dossier ";
+                        string id_tranche = comboxTranche.SelectedValue.ToString();
+                        string reqD = $"select top 10 * from dossier where id_unite in(select id_unite from tb_unite where id_tranche = {id_tranche})";
                         SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                         DataTable DT = new DataTable();
                         da.Fill(DT);
@@ -108,7 +108,10 @@ namespace GenerateArkaveImport
                                 nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
                             }
                             string dossPath = Path.Combine(path, nomDoss);
-                            Directory.CreateDirectory(dossPath);
+                            if (!Directory.Exists(dossPath))
+                            {
+                                Directory.CreateDirectory(dossPath);
+                            }
                             DB dB = new DB(conString);
                             // Sous Dossiers
                             DataTable souDoss = dB.SousDossier(id_dossier);
@@ -119,7 +122,10 @@ namespace GenerateArkaveImport
                                 string formaliteSD = sd["FORMALITE"].ToString();
                                 string sdName = $"sd{numSD} {formaliteSD}";
                                 string sdPath = Path.Combine(dossPath, sdName);
-                                Directory.CreateDirectory(sdPath);
+                                if (Directory.Exists(sdPath))
+                                {
+                                    Directory.CreateDirectory(sdPath); 
+                                }
                                 // Pieces
                                 DataTable pieces = dB.Piece(id_sd);
                                 foreach (DataRow piece in pieces.Rows)
