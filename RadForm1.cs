@@ -89,26 +89,60 @@ namespace GenerateArkaveImport
                         SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                         DataTable DT = new DataTable();
                         da.Fill(DT);
-
-                        foreach (DataRow row in DT.Rows)
+                        // Dossiers
+                        foreach (DataRow doss in DT.Rows)
                         {
                             string nomDoss = "";
-                            string NatureOrigine = row["nature_origine"].ToString();
+                            string NatureOrigine = doss["nature_origine"].ToString();
+                            string id_dossier = doss["id_dossier"].ToString();
                             if (NatureOrigine == "R")
                             {
-                                string NumeroOrigine = row["Numero_origine"].ToString();
-                                string indiceOrigine = row["indice_origine"].ToString();
+                                string NumeroOrigine = doss["Numero_origine"].ToString();
+                                string indiceOrigine = doss["indice_origine"].ToString();
                                 nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
                             }
                             else if (NatureOrigine == "T")
                             {
-                                string NumeroOrigine = row["Numero_Titre"].ToString();
-                                string indiceOrigine = row["indice_Titre"].ToString();
+                                string NumeroOrigine = doss["Numero_Titre"].ToString();
+                                string indiceOrigine = doss["indice_Titre"].ToString();
                                 nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
                             }
-                            Directory.CreateDirectory(Path.Combine(path, nomDoss));
+                            string dossPath = Path.Combine(path, nomDoss);
+                            Directory.CreateDirectory(dossPath);
+                            DB dB = new DB(conString);
+                            // Sous Dossiers
+                            DataTable souDoss = dB.SousDossier(id_dossier);
+                            foreach (DataRow sd in souDoss.Rows)
+                            {
+                                string id_sd = sd["ID_SD"].ToString();
+                                string numSD = sd["NUMERO_SD"].ToString();
+                                string formaliteSD = sd["FORMALITE"].ToString();
+                                string sdName = $"sd{numSD} {formaliteSD}";
+                                string sdPath = Path.Combine(dossPath, sdName);
+                                Directory.CreateDirectory(sdPath);
+                                // Pieces
+                                DataTable pieces = dB.Piece(id_sd);
+                                foreach (DataRow piece in pieces.Rows)
+                                {
+                                    string num_pg = piece["Numero_page"].ToString();
+                                    string nomPiece = piece["Nature_Acte"].ToString();
+                                    string chemin = piece["CHEMIN_PHYSIQUE"].ToString();
+                                    string piecePath = Path.Combine(sdPath, nomPiece);
+                                    if (!Directory.Exists(piecePath))
+                                    {
+                                        Directory.CreateDirectory(piecePath);
+                                    }
+
+                                    string imgNewPath = Path.Combine(piecePath, $"p{num_pg}{new FileInfo(chemin).Extension}");
+                                    if (!File.Exists(imgNewPath))
+                                    {
+                                        File.Copy(chemin, imgNewPath);
+                                    }
+                                }
+                            }
 
                         }
+                        MessageBox.Show("Géneration Complete!!!");
 
                     }
                     catch (Exception ex)
