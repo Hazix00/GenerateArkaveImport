@@ -40,11 +40,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboxTranche = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radProgressBar1 = new Telerik.WinControls.UI.RadProgressBar();
-            this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.radProgressBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -174,22 +170,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connexion";
             // 
-            // radProgressBar1
-            // 
-            this.radProgressBar1.Location = new System.Drawing.Point(30, 227);
-            this.radProgressBar1.Name = "radProgressBar1";
-            this.radProgressBar1.Size = new System.Drawing.Size(466, 32);
-            this.radProgressBar1.TabIndex = 14;
-            this.radProgressBar1.Text = "0%";
-            // 
-            // radLabel1
-            // 
-            this.radLabel1.Location = new System.Drawing.Point(37, 265);
-            this.radLabel1.Name = "radLabel1";
-            this.radLabel1.Size = new System.Drawing.Size(57, 18);
-            this.radLabel1.TabIndex = 15;
-            this.radLabel1.Text = "0 Dossiers";
-            // 
             // RadForm1
             // 
             this.AcceptButton = this.bntGenerer;
@@ -197,8 +177,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnAnnuler;
             this.ClientSize = new System.Drawing.Size(534, 359);
-            this.Controls.Add(this.radLabel1);
-            this.Controls.Add(this.radProgressBar1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnAnnuler);
             this.Controls.Add(this.bntGenerer);
@@ -211,11 +189,8 @@
             this.Text = "ArkaveImport";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.radProgressBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -233,7 +208,5 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboxTranche;
         private System.Windows.Forms.GroupBox groupBox1;
-        private Telerik.WinControls.UI.RadProgressBar radProgressBar1;
-        private Telerik.WinControls.UI.RadLabel radLabel1;
     }
 }
