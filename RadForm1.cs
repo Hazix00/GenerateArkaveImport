@@ -134,7 +134,7 @@ namespace GenerateArkaveImport
                 {
                     string NumeroOrigine = doss["Numero_Titre"].ToString();
                     string indiceOrigine = doss["indice_Titre"].ToString();
-                    nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
+                    nomDoss = $"T{NumeroOrigine}-{indiceOrigine}";
                 }
                 string dossPath = Path.Combine(path, nomDoss);
                 if (!Directory.Exists(dossPath))
