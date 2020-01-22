@@ -16,38 +16,38 @@ namespace GenerateArkaveImport
             this.conString = conString;
         }
 
-        public DataTable SousDossier(string id_dossier)
-        {
-            using (SqlConnection con = new SqlConnection(conString))
-            {
-                con.Open();
-                string reqD = $"select * from sous_dossier where id_dossier ='{id_dossier}'";
-                SqlDataAdapter da = new SqlDataAdapter(reqD, con);
-                DataTable DT = new DataTable();
-                da.Fill(DT);
-                return DT;
-            }
-        }
+        //public DataTable SousDossier(string id_dossier)
+        //{
+        //    using (SqlConnection con = new SqlConnection(conString))
+        //    {
+        //        con.Open();
+        //        string reqD = $"select * from TB_Vues where id_dossier ='{id_dossier}'";
+        //        SqlDataAdapter da = new SqlDataAdapter(reqD, con);
+        //        DataTable DT = new DataTable();
+        //        da.Fill(DT);
+        //        return DT;
+        //    }
+        //}
 
-        public DataTable PieceSD0(string id_dossier)
-        {
-            using (SqlConnection con = new SqlConnection(conString))
-            {
-                con.Open();
-                string reqD = $"select * from piece where id_Dossier ='{id_dossier}' and (id_sd is null or id_sd = '') ";
-                SqlDataAdapter da = new SqlDataAdapter(reqD, con);
-                DataTable DT = new DataTable();
-                da.Fill(DT);
-                return DT;
-            }
-        }
+        //public DataTable PieceSD0(string id_dossier)
+        //{
+        //    using (SqlConnection con = new SqlConnection(conString))
+        //    {
+        //        con.Open();
+        //        string reqD = $"select * from TB_Vues where id_dossier ='{id_dossier}' and (num_sous_dos is null or num_sous_dos = '') ";
+        //        SqlDataAdapter da = new SqlDataAdapter(reqD, con);
+        //        DataTable DT = new DataTable();
+        //        da.Fill(DT);
+        //        return DT;
+        //    }
+        //}
 
-        public DataTable Piece(string id_sd)
+        public DataTable Piece(string id_dossier)
         {
             using (SqlConnection con = new SqlConnection(conString))
             {
                 con.Open();
-                string reqD = $"select * from piece where id_SD ='{id_sd}'";
+                string reqD = $"select * from TB_Vues where id_dossier ='{id_dossier}'";
                 SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                 DataTable DT = new DataTable();
                 da.Fill(DT);
