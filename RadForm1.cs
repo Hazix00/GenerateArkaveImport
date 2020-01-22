@@ -10,6 +10,7 @@ using Telerik.WinControls;
 using Telerik.WinControls.UI;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace GenerateArkaveImport
 {
@@ -70,15 +71,12 @@ namespace GenerateArkaveImport
             int id_tranche = Convert.ToInt32(view["id_tranche"]);*/
         }
 
-        private void bntGenerer_Click(object sender, EventArgs e)
+        private async void bntGenerer_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
             if (folder.ShowDialog() == DialogResult.OK)
             {
                 string path = folder.SelectedPath;
-
-                //string connectString = $"Server = {server}; Database = CADASTRE_CONTROLE_TAZA; User ID = {Login}; Password = {password}";
-
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     try
@@ -89,93 +87,21 @@ namespace GenerateArkaveImport
                         SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                         DataTable DT = new DataTable();
                         da.Fill(DT);
-                        // Dossiers
-                        foreach (DataRow doss in DT.Rows)
+                        var nb_dossies = DT.Rows.Count;
+                        radProgressBar1.Maximum = nb_dossies;
+                        // The Progress<T> constructor captures our UI context,
+                        //  so the lambda will be run on the UI thread.
+
+                        var progress = new Progress<int>(percent =>
                         {
-                            string nomDoss = "";
-                            string NatureOrigine = doss["nature_origine"].ToString();
-                            string id_dossier = doss["id_dossier"].ToString();
-                            if (NatureOrigine == "R")
-                            {
-                                string NumeroOrigine = doss["Numero_origine"].ToString();
-                                string indiceOrigine = doss["indice_origine"].ToString();
-                                nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
-                            }
-                            else if (NatureOrigine == "T")
-                            {
-                                string NumeroOrigine = doss["Numero_Titre"].ToString();
-                                string indiceOrigine = doss["indice_Titre"].ToString();
-                                nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
-                            }
-                            string dossPath = Path.Combine(path, nomDoss);
-                            if (!Directory.Exists(dossPath))
-                            {
-                                Directory.CreateDirectory(dossPath);
-                            }
-                            DB dB = new DB(conString);
-                            // Pieces sans hors sous dossiers
-                            DataTable piecesSD0 = dB.PieceSD0(id_dossier);
-                            foreach (DataRow piece in piecesSD0.Rows)
-                            {
-                                string num_pg = piece["Numero_page"].ToString();
-                                string nomPiece = piece["Nature_Acte"].ToString();
-                                string chemin = piece["CHEMIN_PHYSIQUE"].ToString();
+                            radProgressBar1.Value1 = percent;
+                            radProgressBar1.Text = $"{percent * 100 / nb_dossies} %";
+                            radLabel1.Text = $"{percent}/{nb_dossies} Dossiers";
+                        });
 
-                                string sdPath = Path.Combine(dossPath, "sd0");
-                                if (!Directory.Exists(sdPath))
-                                {
-                                    Directory.CreateDirectory(sdPath);
-                                }
-
-                                string piecePath = Path.Combine(sdPath, nomPiece);
-                                if (!Directory.Exists(piecePath))
-                                {
-                                    Directory.CreateDirectory(piecePath);
-                                }
-
-                                string imgNewPath = Path.Combine(piecePath, $"p{num_pg}{new FileInfo(chemin).Extension}");
-                                if (!File.Exists(imgNewPath))
-                                {
-                                    File.Copy(chemin, imgNewPath);
-                                }
-                            }
-                            // Sous Dossiers
-                            DataTable souDoss = dB.SousDossier(id_dossier);
-                            foreach (DataRow sd in souDoss.Rows)
-                            {
-                                string id_sd = sd["ID_SD"].ToString();
-                                string numSD = sd["NUMERO_SD"].ToString();
-                                string formaliteSD = sd["FORMALITE"].ToString();
-                                string sdName = $"sd{numSD} {formaliteSD}";
-                                string sdPath = Path.Combine(dossPath, sdName);
-                                if (Directory.Exists(sdPath))
-                                {
-                                    Directory.CreateDirectory(sdPath); 
-                                }
-
-
-                                // Pieces dans sous dossier
-                                DataTable pieces = dB.Piece(id_sd);
-                                foreach (DataRow piece in pieces.Rows)
-                                {
-                                    string num_pg = piece["Numero_page"].ToString();
-                                    string nomPiece = piece["Nature_Acte"].ToString();
-                                    string chemin = piece["CHEMIN_PHYSIQUE"].ToString();
-                                    string piecePath = Path.Combine(sdPath, nomPiece);
-                                    if (!Directory.Exists(piecePath))
-                                    {
-                                        Directory.CreateDirectory(piecePath);
-                                    }
-
-                                    string imgNewPath = Path.Combine(piecePath, $"p{num_pg}{new FileInfo(chemin).Extension}");
-                                    if (!File.Exists(imgNewPath))
-                                    {
-                                        File.Copy(chemin, imgNewPath);
-                                    }
-                                }
-                            }
-
-                        }
+                            // DoProcessing is run on the thread pool.
+                        await Task.Run(() => GenererImport(path, DT, progress));
+                    
                         MessageBox.Show("Géneration Complete!!!");
 
                     }
@@ -185,12 +111,102 @@ namespace GenerateArkaveImport
                     }
 
                 }
+
             }
         }
 
-        private void btnAnnuler_Click(object sender, EventArgs e)
+        private void GenererImport(string path, DataTable dT, IProgress<int> progress)
         {
-            Application.Exit();
+            int i = 0; //progress
+            // Dossiers
+            foreach (DataRow doss in dT.Rows)
+            {
+                string nomDoss = "";
+                string NatureOrigine = doss["nature_origine"].ToString();
+                string id_dossier = doss["id_dossier"].ToString();
+                if (NatureOrigine == "R")
+                {
+                    string NumeroOrigine = doss["Numero_origine"].ToString();
+                    string indiceOrigine = doss["indice_origine"].ToString();
+                    nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
+                }
+                else if (NatureOrigine == "T")
+                {
+                    string NumeroOrigine = doss["Numero_Titre"].ToString();
+                    string indiceOrigine = doss["indice_Titre"].ToString();
+                    nomDoss = $"R{NumeroOrigine}-{indiceOrigine}";
+                }
+                string dossPath = Path.Combine(path, nomDoss);
+                if (!Directory.Exists(dossPath))
+                {
+                    Directory.CreateDirectory(dossPath);
+                }
+                DB dB = new DB(conString);
+                // Pieces sans hors sous dossiers
+                DataTable piecesSD0 = dB.PieceSD0(id_dossier);
+                foreach (DataRow piece in piecesSD0.Rows)
+                {
+                    string num_pg = piece["Numero_page"].ToString();
+                    string nomPiece = piece["Nature_Acte"].ToString();
+                    string chemin = piece["CHEMIN_PHYSIQUE"].ToString();
+
+                    string sdPath = Path.Combine(dossPath, "sd0");
+                    if (!Directory.Exists(sdPath))
+                    {
+                        Directory.CreateDirectory(sdPath);
+                    }
+
+                    string piecePath = Path.Combine(sdPath, nomPiece);
+                    if (!Directory.Exists(piecePath))
+                    {
+                        Directory.CreateDirectory(piecePath);
+                    }
+
+                    string imgNewPath = Path.Combine(piecePath, $"p{num_pg}{new FileInfo(chemin).Extension}");
+                    if (!File.Exists(imgNewPath))
+                    {
+                        File.Copy(chemin, imgNewPath);
+                    }
+                }
+                // Sous Dossiers
+                DataTable souDoss = dB.SousDossier(id_dossier);
+                foreach (DataRow sd in souDoss.Rows)
+                {
+                    string id_sd = sd["ID_SD"].ToString();
+                    string numSD = sd["NUMERO_SD"].ToString();
+                    string formaliteSD = sd["FORMALITE"].ToString();
+                    string sdName = $"sd{numSD} {formaliteSD}";
+                    string sdPath = Path.Combine(dossPath, sdName);
+                    if (Directory.Exists(sdPath))
+                    {
+                        Directory.CreateDirectory(sdPath);
+                    }
+
+
+                    // Pieces dans sous dossier
+                    DataTable pieces = dB.Piece(id_sd);
+                    foreach (DataRow piece in pieces.Rows)
+                    {
+                        string num_pg = piece["Numero_page"].ToString();
+                        string nomPiece = piece["Nature_Acte"].ToString();
+                        string chemin = piece["CHEMIN_PHYSIQUE"].ToString();
+                        string piecePath = Path.Combine(sdPath, nomPiece);
+                        if (!Directory.Exists(piecePath))
+                        {
+                            Directory.CreateDirectory(piecePath);
+                        }
+
+                        string imgNewPath = Path.Combine(piecePath, $"p{num_pg}{new FileInfo(chemin).Extension}");
+                        if (!File.Exists(imgNewPath))
+                        {
+                            File.Copy(chemin, imgNewPath);
+                        }
+                    }
+                }
+                progress.Report(++i);
+
+            }
+
         }
     }
 }
