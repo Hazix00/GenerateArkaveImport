@@ -40,10 +40,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboxTranche = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ComboBaseDonnee = new System.Windows.Forms.ComboBox();
             this.radProgressBar1 = new Telerik.WinControls.UI.RadProgressBar();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
-            this.ComboBaseDonnee = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radProgressBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -176,6 +177,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connexion";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Emoji", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(22, 132);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(123, 17);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Base De Donnée ";
+            // 
+            // ComboBaseDonnee
+            // 
+            this.ComboBaseDonnee.FormattingEnabled = true;
+            this.ComboBaseDonnee.Location = new System.Drawing.Point(157, 128);
+            this.ComboBaseDonnee.Name = "ComboBaseDonnee";
+            this.ComboBaseDonnee.Size = new System.Drawing.Size(200, 21);
+            this.ComboBaseDonnee.TabIndex = 4;
+            // 
             // radProgressBar1
             // 
             this.radProgressBar1.Location = new System.Drawing.Point(12, 227);
@@ -193,29 +212,21 @@
             this.radLabel1.TabIndex = 15;
             this.radLabel1.Text = "0 Dossiers";
             // 
-            // ComboBaseDonnee
+            // button1
             // 
-            this.ComboBaseDonnee.FormattingEnabled = true;
-            this.ComboBaseDonnee.Location = new System.Drawing.Point(157, 128);
-            this.ComboBaseDonnee.Name = "ComboBaseDonnee";
-            this.ComboBaseDonnee.Size = new System.Drawing.Size(200, 21);
-            this.ComboBaseDonnee.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Emoji", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(22, 132);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 17);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Base De Donnée ";
+            this.button1.Location = new System.Drawing.Point(203, 303);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(121, 33);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // RadForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(551, 359);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.radLabel1);
             this.Controls.Add(this.radProgressBar1);
             this.Controls.Add(this.groupBox1);
@@ -256,5 +267,6 @@
         private Telerik.WinControls.UI.RadLabel radLabel1;
         private System.Windows.Forms.ComboBox ComboBaseDonnee;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -86,6 +86,7 @@ namespace GenerateArkaveImport
                         da.Fill(DT);
                         var nb_dossies = DT.Rows.Count;
                         radProgressBar1.Maximum = nb_dossies;
+
                         // The Progress<T> constructor captures our UI context,
                         //  so the lambda will be run on the UI thread.
 
@@ -185,7 +186,7 @@ namespace GenerateArkaveImport
             using (var con = new SqlConnection(conString))
             {
                 con.Open();
-                string req = "select DISTINCT id_tranche from TB_UNITE";
+                string req = "select DISTINCT id_tranche from TB_UNITE ";
                 SqlDataAdapter da = new SqlDataAdapter(req, con);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
