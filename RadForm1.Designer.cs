@@ -156,6 +156,7 @@
             this.comboxTranche.Name = "comboxTranche";
             this.comboxTranche.Size = new System.Drawing.Size(200, 21);
             this.comboxTranche.TabIndex = 5;
+            this.comboxTranche.SelectedIndexChanged += new System.EventHandler(this.comboxTranche_SelectedIndexChanged_1);
             // 
             // groupBox1
             // 

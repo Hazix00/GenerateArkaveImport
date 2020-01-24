@@ -41,6 +41,19 @@ namespace GenerateArkaveImport
         //        return DT;
         //    }
         //}
+         public void UpdateDossierLivrable(string id_dossier,string id_livrable)
+        {
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string reqUP = $"update dossier set id_livrable= {id_livrable} where id_dossier={id_dossier}";
+                SqlCommand cmdUp = new SqlCommand(reqUP, con);
+                cmdUp.ExecuteNonQuery();
+
+            }
+
+        }
+
 
         public DataTable Piece(string id_dossier)
         {
