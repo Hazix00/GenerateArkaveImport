@@ -237,7 +237,7 @@ namespace GenerateArkaveImport
                 DataTable DT = new DataTable();
                 da.Fill(DT);
 
-                string nomlivrable = DT.Rows[0]["name"].ToString() + "_" + DT.Rows[0]["tranche"].ToString();
+                string nomlivrable = ComboBaseDonnee.Text + "_" + DT.Rows[0]["tranche"].ToString();
                 string LivInsertion = $"INSERT into TB_Livrable ( date_livrable, user_livrable, nom_livrable , etat) output INSERTED.ID " +
                                       $" VALUES ( GETDATE(), 'BatshGeneration',{nomlivrable},0";
 
