@@ -46,7 +46,7 @@ namespace GenerateArkaveImport
             using (SqlConnection con = new SqlConnection(conString))
             {
                 con.Open();
-                string reqUP = $"update dossier set id_livrable= {id_livrable} where id_dossier={id_dossier}";
+                string reqUP = $"update tb_dossier set id_livrable= {id_livrable} where id_dossier={id_dossier}";
                 SqlCommand cmdUp = new SqlCommand(reqUP, con);
                 cmdUp.ExecuteNonQuery();
 
@@ -60,12 +60,32 @@ namespace GenerateArkaveImport
             using (SqlConnection con = new SqlConnection(conString))
             {
                 con.Open();
-                string reqD = $"select * from TB_Vues where id_dossier ='{id_dossier}'";
+                string reqD = $"select rtrim(nom_piece) nom_piece,rtrim(Num_page) Num_page,rtrim(url) url,rtrim(num_sous_dos) num_sous_dos,rtrim(formalite) formalite from TB_Vues where id_dossier ={id_dossier}";
                 SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                 DataTable DT = new DataTable();
                 da.Fill(DT);
                 return DT;
             }
+        }
+
+        public string CreerLigneLivrable ( string id_tranche, string NomBase)
+        {
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                con.Open();
+                string reqD = $" select tranche From TB_Tranche where id_tranche = { id_tranche }";
+                SqlDataAdapter da = new SqlDataAdapter(reqD, con);
+                DataTable DT = new DataTable();
+                da.Fill(DT);
+
+                string nomlivrable = NomBase + "_" + DT.Rows[0]["tranche"].ToString();
+                string LivInsertion = $"INSERT into TB_Livrable ( date_livrable, user_livrable, nom_livrable , etat) output INSERTED.id_livrable " +
+                                      $" VALUES ( GETDATE(), 'BatshGeneration','{nomlivrable}',0)";
+
+                SqlCommand cmd = new SqlCommand(LivInsertion, con);
+                return cmd.ExecuteScalar().ToString();
+            }
+
         }
 
 

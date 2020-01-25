@@ -44,7 +44,6 @@
             this.ComboBaseDonnee = new System.Windows.Forms.ComboBox();
             this.radProgressBar1 = new Telerik.WinControls.UI.RadProgressBar();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radProgressBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
@@ -156,7 +155,6 @@
             this.comboxTranche.Name = "comboxTranche";
             this.comboxTranche.Size = new System.Drawing.Size(200, 21);
             this.comboxTranche.TabIndex = 5;
-            this.comboxTranche.SelectedIndexChanged += new System.EventHandler(this.comboxTranche_SelectedIndexChanged_1);
             // 
             // groupBox1
             // 
@@ -213,21 +211,11 @@
             this.radLabel1.TabIndex = 15;
             this.radLabel1.Text = "0 Dossiers";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(203, 303);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 33);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // RadForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(551, 359);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.radLabel1);
             this.Controls.Add(this.radProgressBar1);
             this.Controls.Add(this.groupBox1);
@@ -268,6 +256,5 @@
         private Telerik.WinControls.UI.RadLabel radLabel1;
         private System.Windows.Forms.ComboBox ComboBaseDonnee;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button1;
     }
 }

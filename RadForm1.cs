@@ -16,6 +16,8 @@ namespace GenerateArkaveImport
 {
     public partial class RadForm1 : Telerik.WinControls.UI.RadForm
     {
+        string dbTr;
+        string dbname;
         string livrableID = "0";
         string conString;
         public RadForm1()
@@ -62,14 +64,13 @@ namespace GenerateArkaveImport
 
         }
 
-        private void comboxTranche_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            /*DataRowView view = comboxTranche.SelectedItem as DataRowView;      
-            int id_tranche = Convert.ToInt32(view["id_tranche"]);*/
-        }
-
         private async void bntGenerer_Click(object sender, EventArgs e)
         {
+            if (dbTr == null || dbname == null)
+            {
+                MessageBox.Show("Test");
+                return;
+            }
             FolderBrowserDialog folder = new FolderBrowserDialog();
             if (folder.ShowDialog() == DialogResult.OK)
             {
@@ -79,7 +80,7 @@ namespace GenerateArkaveImport
                     try
                     {
                         con.Open();
-                        string id_tranche = comboxTranche.Text;
+                        string id_tranche = dbTr;
                         string reqD = $"select top 10 * from TB_Dossier where id_unite in(select id_unite from tb_unite where id_tranche = {id_tranche})and id_livrable is null";
                         SqlDataAdapter da = new SqlDataAdapter(reqD, con);
                         DataTable DT = new DataTable();
@@ -113,8 +114,11 @@ namespace GenerateArkaveImport
 
         private void GenererImport(string path, DataTable dT, IProgress<int> progress)
         {
+            
+            DB dB = new DB(conString);
             int i = 0; //progress
             // Dossiers
+            livrableID = dB.CreerLigneLivrable( dbTr, dbname);
             if (livrableID == "0")
             {
 
@@ -144,9 +148,6 @@ namespace GenerateArkaveImport
                     {
                         Directory.CreateDirectory(dossPath);
                     }
-
-                    DB dB = new DB(conString);
-
                     // Pieces
                     DataTable pieces = dB.Piece(id_dossier);
                     foreach (DataRow piece in pieces.Rows)
@@ -154,8 +155,9 @@ namespace GenerateArkaveImport
                         string num_page = piece["Num_page"].ToString().Trim();
                         string nomPiece = piece["nom_piece"].ToString().Trim();
                         string chemin = piece["url"].ToString().Trim();
-
-                        int numSousDossier = Convert.ToInt32(piece["num_sous_dos"].ToString().Trim());
+                        string num_sd = piece["num_sous_dos"].ToString().Trim();
+                        if (num_sd == "") num_sd = "0";
+                        int numSousDossier = Convert.ToInt32(num_sd);
                         String Formalite = piece["formalite"].ToString().Trim();
 
                         String SousDossierName = numSousDossier != 0 ? $"sd{numSousDossier} {Formalite}" : "sd0";
@@ -171,8 +173,8 @@ namespace GenerateArkaveImport
                         {
                             Directory.CreateDirectory(piecePath);
                         }
-                        // a supprimer apres le test
-                        chemin = @"%userprofile%\desktop\p1.tif";
+                        //test Images
+                        chemin = @"C:\Users\HP\Desktop\p1.tif";
                         string imgNewPath = Path.Combine(piecePath, $"p{num_page}{new FileInfo(chemin).Extension}");
                         if (!File.Exists(imgNewPath) && File.Exists(chemin))
                         {
@@ -183,20 +185,23 @@ namespace GenerateArkaveImport
                     if (livrableID != "0")
                     {
                         dB.UpdateDossierLivrable(id_dossier, livrableID);
-
                     }
-
+                    
                     progress.Report(++i);
                 }
             }
 
 
         }
+
+        private void btnAnnuler_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
         private void ComboBaseDonnee_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var db = ComboBaseDonnee.Text;
-            conString = conString.Replace("master", db);
-
+            dbname = ComboBaseDonnee.Text;
+            conString = conString.Replace("master", dbname);
 
             using (var con = new SqlConnection(conString))
             {
@@ -217,37 +222,14 @@ namespace GenerateArkaveImport
                     comboxTranche.DataSource = dt;
                     comboxTranche.DisplayMember = "id_tranche";
                     comboxTranche.ValueMember = "id_tranche";
+                    comboxTranche.SelectedIndexChanged += ComboxTranche_SelectedIndexChanged;
                 }
             }
         }
 
-        private void btnAnnuler_Click(object sender, EventArgs e)
+        private void ComboxTranche_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.Close();
-        }
-
-        private void comboxTranche_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            using (SqlConnection con = new SqlConnection(conString))
-            {
-
-                string id_tranche = comboxTranche.Text;
-                string reqD = $" select  tranche From TB_Tranche where id_tranche = { id_tranche }";
-                SqlDataAdapter da = new SqlDataAdapter(reqD, con);
-                DataTable DT = new DataTable();
-                da.Fill(DT);
-
-                string nomlivrable = DT.Rows[0]["name"].ToString() + "_" + DT.Rows[0]["tranche"].ToString();
-                string LivInsertion = $"INSERT into TB_Livrable ( date_livrable, user_livrable, nom_livrable , etat) output INSERTED.ID " +
-                                      $" VALUES ( GETDATE(), 'BatshGeneration',{nomlivrable},0";
-
-
-                using (SqlCommand cmd = new SqlCommand(LivInsertion, con))
-                {
-                    con.Open();
-                    livrableID = cmd.ExecuteScalar().ToString();
-                }
-            }
+            dbTr = comboxTranche.Text;
         }
     }
 }
